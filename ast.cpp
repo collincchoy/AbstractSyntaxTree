@@ -47,7 +47,7 @@ int AST::buildAST(string expression)
 		token_i++;
 	}
 	
-	
+	return 0;
 }
 
 vector<string> AST::tokenize(string expression)
@@ -74,7 +74,7 @@ string AST::toString(ASTNode* node)
 	}
 	else
 	{
-		for (int i = 0; i < temp->children.size(); i++) {
+		for (int i = 0; i < (int)(temp->children.size()); i++) {
 			str += this->toString(temp->children[i]) + " ";
 		}
 		str += temp->str_val;
@@ -88,7 +88,7 @@ AST::ASTNode::ASTNode()
 	str_val = "DEF";
 
 	parent = NULL;
-	children = vector<ASTNode*>(10);
+	children = vector<ASTNode*>();
 }
 
 AST::ASTNode::ASTNode(ASTNode* newParent, double newVal)
@@ -97,7 +97,7 @@ AST::ASTNode::ASTNode(ASTNode* newParent, double newVal)
 	str_val = "";
 
 	parent = newParent;
-	children = vector<ASTNode*>(10);
+	children = vector<ASTNode*>();
 }
 
 AST::ASTNode::ASTNode(ASTNode* newParent, string newStr_val)
@@ -106,5 +106,5 @@ AST::ASTNode::ASTNode(ASTNode* newParent, string newStr_val)
 	str_val = newStr_val;
 
 	parent = newParent;
-	children = vector<ASTNode*>(10);
+	children = vector<ASTNode*>();
 }
