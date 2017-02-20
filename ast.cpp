@@ -13,48 +13,11 @@ void AST::insert(ASTNode* newVal)
 	
 }
 
-int AST::buildAST(string expression)
-{
-	vector<string> tokens = this->tokenize(expression);
-	
-	// Skip first element paranthesis
-	// Set root of tree to the first atom
-	root->str_val = tokens[1];
-	
-	int token_i = 2;
-	int token_size = tokens.size();
-	
-	while (token_i < token_size)
-	{
-		if (isdigit(tokens[token_i][0]))// check if is a number
-		{
-			this->current_ptr->children.push_back(new ASTNode(this->current_ptr, tokens[token_i]));
-		}
-		else if (tokens[token_i] == "(")
-		{
-			token_i++;
-			this->current_ptr->children.push_back(new ASTNode(this->current_ptr, tokens[token_i]));
-			this->current_ptr = this->current_ptr->children[this->current_ptr->children.size() - 1];
-		}
-		else if (tokens[token_i] == ")")
-		{
-			this->current_ptr = this->current_ptr->parent;
-		}
-		else
-		{
-			this->current_ptr->children.push_back(new ASTNode(this->current_ptr, tokens[token_i]));
-		}
-		token_i++;
-	}
-	
-	return 0;
-}
-
 // tokenize
 // inString - String to be tokenized
 //
 // 'tokenize' parses string and removes whitespace and returns vector of strings
-std::vector<std::string> tokenize(string inString)
+vector<string> AST::tokenize(string inString)
 {
 
 	std::vector<std::string> myVector;
@@ -131,7 +94,7 @@ std::vector<std::string> tokenize(string inString)
 			{
 				size_t x = 1;
 				size_t y = i + 1;
-				while (isalpha(inString[y]) && inString[y] != inString.length())
+				while (isalpha(inString[y]) && (inString[y] != (int)inString.length()))
 				{
 					++y;
 					++x;
@@ -151,6 +114,43 @@ std::vector<std::string> tokenize(string inString)
 	} //while loop til end of expression
 	return myVector;
 } //end function
+
+int AST::buildAST(string expression)
+{
+	vector<string> tokens = this->tokenize(expression);
+	
+	// Skip first element paranthesis
+	// Set root of tree to the first atom
+	root->str_val = tokens[1];
+	
+	int token_i = 2;
+	int token_size = tokens.size();
+	
+	while (token_i < token_size)
+	{
+		if (isdigit(tokens[token_i][0]))// check if is a number
+		{
+			this->current_ptr->children.push_back(new ASTNode(this->current_ptr, tokens[token_i]));
+		}
+		else if (tokens[token_i] == "(")
+		{
+			token_i++;
+			this->current_ptr->children.push_back(new ASTNode(this->current_ptr, tokens[token_i]));
+			this->current_ptr = this->current_ptr->children[this->current_ptr->children.size() - 1];
+		}
+		else if (tokens[token_i] == ")")
+		{
+			this->current_ptr = this->current_ptr->parent;
+		}
+		else
+		{
+			this->current_ptr->children.push_back(new ASTNode(this->current_ptr, tokens[token_i]));
+		}
+		token_i++;
+	}
+	
+	return 0;
+}
 
 string AST::toString()
 {

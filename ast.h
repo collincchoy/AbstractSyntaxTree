@@ -30,5 +30,5 @@ class AST {
 	private:
 		void insert(ASTNode* newVal);
 		string toString(ASTNode* node);
-		vector<string> tokenize(string expression);
+		vector<string> tokenize(string inString);
 };
