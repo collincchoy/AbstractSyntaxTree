@@ -58,7 +58,11 @@ vector<string> AST::tokenize(string inString)
 			//  - - - - - - - - -
 			else if (inString[i] == '-')
 			{
-				if (inString[i+1] == ' ')	myVector.push_back(std::string(1, inString[i])); //operator not number
+				if (inString[i+1] == ' ')
+				{		
+					myVector.push_back(std::string(1, inString[i])); //operator not number
+					++i;
+				}
 				else
 				{
 					size_t x = 1;
